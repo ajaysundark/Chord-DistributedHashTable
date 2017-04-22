@@ -5,7 +5,7 @@ struct NodeRef {
 }
 
 service ChordService {
-    bool insert(1:string word, 2:string definition),
+    void insert(1:i32 wordKey, 2:string definition),
     NodeRef findNode(1:string word),
     string lookup(1:string word),
     bool join(1:NodeRef other),
