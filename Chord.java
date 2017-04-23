@@ -1,4 +1,10 @@
 import org.apache.thrift.TException;
+import org.apache.thrift.server.TServer;
+import org.apache.thrift.server.TSimpleServer;
+import org.apache.thrift.transport.TServerSocket;
+import org.apache.thrift.transport.TServerTransport;
+
+import java.util.ArrayList;
 
 /**
  * Created by ajay on 4/21/17.
@@ -8,14 +14,14 @@ public class Chord {
     private final String ip;
     private final int primaryPort;
     private final String dictSrc;
-    // private ArrayList<chordProcessor> processors;
+    private ArrayList<TServer> servers;
 
     public Chord(int count, String ip, int port, String srcFile) {
         this.chordNodesCount = count;
         this.ip = ip;
         this.primaryPort = port;
         this.dictSrc = srcFile;
-        // this.processors = Arrays.asList(new ChordProcessor[chordNodesCount]);
+        this.servers = new ArrayList<>(chordNodesCount);
     }
 
     public static void main(String args[]) {
@@ -34,6 +40,9 @@ public class Chord {
 
     public void start() {
         buildDHT();
+        System.out.println("-----------------------------------------");
+        System.out.println(" DHT is ready.. You can load dictionary ");
+        System.out.println("-----------------------------------------");
 //        new DictionaryLoader(ip, primaryPort, dictSrc).load();
     }
 
@@ -61,10 +70,29 @@ public class Chord {
     }
 
     private void startService(ChordNode node) {
-        // TODO: start thrift service for ChordNode
+        ChordService.Processor processor = new ChordService.Processor(node);
+        Runnable chordRunner = new Runnable() {
+            public void run() {
+                serve(processor, node.myPtr);
+            }
+        };
+
     }
 
+    protected static void serve(ChordService.Processor sProcessor, NodeRef connInfo) {
+        try {
+            TServerTransport serverTransport = new TServerSocket(connInfo.port);
+            TServer server = new TSimpleServer(new TServer.Args(serverTransport).processor(sProcessor));
+            System.out.println("Starting the Chord server "+connInfo.nodeId+" at port "+connInfo.port);
+            server.serve();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     private void stopService() {
-        // TODO: stop thrift service for all ChordNodes
+        for (TServer server : servers) {
+            server.stop();
+        }
     }
 }
