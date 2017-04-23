@@ -25,7 +25,7 @@ public class Chord {
     }
 
     public static void main(String args[]) {
-        int noOfChordNodes = 8;
+        int noOfChordNodes = 3;
         if (args.length!=3) {
             System.err.println("Usage: java Chord ipaddr<str> port<int> dict-srcfile<str-path>");
             System.exit(1);

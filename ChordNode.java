@@ -16,15 +16,19 @@ public class ChordNode implements ChordService.Iface {
     public NodeRef successor;
     public NodeRef predecessor;
 
-    private Finger[] finger = new Finger[32];
+    public final int m = 3; // TODO: handle dummy hash
+
+    private Finger[] finger;
     private HashMap<Integer, String> contentSlice;
 
     public ChordNode(NodeRef cn) {
-        this.nodeKey = ChordUtility.hash(cn.ip+'.'+cn.port+'.'+cn.nodeId);
+//        this.nodeKey = ChordUtility.hash(cn.ip+'.'+cn.port+'.'+cn.nodeId);
+        this.nodeKey = ChordUtility.hash(cn); // TODO: handle dummy hash
         this.myPtr = new NodeRef(cn);
 
         this.successor = this.myPtr;
         this.predecessor = this.myPtr;
+        finger = new Finger[m];
         contentSlice = new HashMap<>();
     }
 
@@ -83,7 +87,7 @@ public class ChordNode implements ChordService.Iface {
 
     @Override
     public NodeRef closestPrecedingFinger(int key) throws org.apache.thrift.TException {
-        for (int i = 31; i >= 0; --i) {
+        for (int i = m-1; i >= 0; --i) {
             if(checkFingerRange(finger[i].node, key)) {
                 return finger[i].node;
             }
@@ -149,8 +153,8 @@ public class ChordNode implements ChordService.Iface {
             updateOthers();
         } else {
             // self join
-            for (int i = 0; i < 32; i++) {
-                this.finger[i] = new Finger((nodeKey + (1<<i))%(1<<32), new NodeRef(myPtr));
+            for (int i = 0; i < m; i++) {
+                this.finger[i] = new Finger((nodeKey + (1<<i))%(1<<m), new NodeRef(myPtr));
             }
             this.predecessor = new NodeRef(myPtr);
             this.successor = this.finger[0].node;
@@ -159,9 +163,9 @@ public class ChordNode implements ChordService.Iface {
     }
 
     private void updateOthers() {
-        for (int i = 0; i < 32; i++) {
+        for (int i = 0; i < m; i++) {
             int pkey = nodeKey-(1<<i);
-            if(pkey < 0) pkey+=(1<<32);
+            if(pkey < 0) pkey+=(1<<m);
 
             try {
                 NodeRef pred = findPredecessor(pkey);
@@ -206,13 +210,13 @@ public class ChordNode implements ChordService.Iface {
             transport.open();
             TProtocol protocol = new TBinaryProtocol(transport);
             ChordService.Client chordNode = new ChordService.Client(protocol);
-            this.successor = chordNode.findSuccessor((nodeKey+(1<<0))%(1<<32) ); // first finger : n + pow(2, i) mod pow(2,m)
+            this.successor = chordNode.findSuccessor((nodeKey+(1<<0))%(1<<m) ); // first finger : n + pow(2, i) mod pow(2,m)
             transport.close();
         } catch (TException e) {
             System.err.println("exception at initFingerTable");
             e.printStackTrace();
         }
-        this.finger[0] = new Finger((nodeKey+(1<<0))%(1<<32), successor);
+        this.finger[0] = new Finger((nodeKey+(1<<0))%(1<<m), successor);
 
         // update predecessor
         TTransport transport2 = new TSocket(successor.ip, successor.port);
@@ -229,9 +233,9 @@ public class ChordNode implements ChordService.Iface {
             e.printStackTrace();
         }
 
-        for (int i = 0; i < 31; i++) {
+        for (int i = 0; i < m-1; i++) {
             /* finger[i+1].start */
-            int fstart = ( (nodeKey + (1<<(i+1)))%(1<<32) ); // start = n+pow(2,i+1) mod pow(2, 32)
+            int fstart = ( (nodeKey + (1<<(i+1)))%(1<<m) ); // start = n+pow(2,i+1) mod pow(2, 32)
             if ( (fstart >= nodeKey && fstart<finger[i].node.nodeId)
                     || (fstart<finger[i].node.nodeId && fstart >= nodeKey) ){
                 this.finger[i+1] = new Finger(fstart, new NodeRef(finger[i].node));
@@ -256,7 +260,9 @@ public class ChordNode implements ChordService.Iface {
 
     @Override
     public void printFingerTable() throws org.apache.thrift.TException {
-        // TODO: print my finger table
+        for (Finger f : finger) {
+            System.out.println(f);
+        }
     }
 
 }
