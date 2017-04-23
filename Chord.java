@@ -5,6 +5,7 @@ import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TServerTransport;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by ajay on 4/21/17.
@@ -52,6 +53,8 @@ public class Chord {
         startService(primaryChord);
 
         try {
+
+            TimeUnit.SECONDS.sleep(4);
             primaryChord.join(null);
 
         /* start remaining nodes and connect to Ring with node-0 join */
@@ -64,7 +67,7 @@ public class Chord {
                 }
 
             }
-        } catch (TException e) {
+        } catch (TException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -76,7 +79,7 @@ public class Chord {
                 serve(processor, node.myPtr);
             }
         };
-
+        new Thread(chordRunner).start();
     }
 
     protected static void serve(ChordService.Processor sProcessor, NodeRef connInfo) {
