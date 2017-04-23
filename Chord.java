@@ -20,6 +20,11 @@ public class Chord {
 
     public static void main(String args[]) {
         int noOfChordNodes = 8;
+        if (args.length!=3) {
+            System.err.println("Usage: java Chord ipaddr<str> port<int> dict-srcfile<str-path>");
+            System.exit(1);
+        }
+
         new Chord(noOfChordNodes,
                 args[0] /* ip */,
                 Integer.valueOf(args[1]) /* port */,
@@ -29,7 +34,7 @@ public class Chord {
 
     public void start() {
         buildDHT();
-        new DictionaryLoader(ip, primaryPort, dictSrc).load();
+//        new DictionaryLoader(ip, primaryPort, dictSrc).load();
     }
 
     private void buildDHT() {

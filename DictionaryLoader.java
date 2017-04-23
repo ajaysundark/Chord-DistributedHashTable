@@ -18,6 +18,15 @@ public class DictionaryLoader {
     private final String ip;
     private final int port;
 
+    public static void main(String args[]) {
+        if (args.length!=3) {
+            System.err.println("Usage: java DictionaryLoader ipaddr<str> port<int> dict-srcfile<str-path>");
+            System.exit(1);
+        }
+
+        new DictionaryLoader(args[0], Integer.parseInt(args[1]), args[2]).load();
+    }
+
     public DictionaryLoader(String ip, int primaryPort, String srcFile) {
         this.ip = ip;
         this.port = primaryPort;
