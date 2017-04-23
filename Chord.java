@@ -37,17 +37,21 @@ public class Chord {
         ChordNode primaryChord = new ChordNode(new NodeRef(ip, primaryPort, 0));
         startService(primaryChord);
 
+        try {
+            primaryChord.join(null);
+
         /* start remaining nodes and connect to Ring with node-0 join */
-        for (int i = 1; i < chordNodesCount; i++) {
-            try {
+            for (int i = 1; i < chordNodesCount; i++) {
                 ChordNode secondary = new ChordNode(new NodeRef(ip, primaryPort+i, i));
                 startService(secondary);
-                if(!primaryChord.join(secondary.myPtr)) {
+
+                if(!secondary.join(primaryChord.myPtr)) {
                     System.out.println("JOIN FAILED: " + secondary.myPtr);
                 }
-            } catch (TException e) {
-                e.printStackTrace();
+
             }
+        } catch (TException e) {
+            e.printStackTrace();
         }
     }
 
