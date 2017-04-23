@@ -26,7 +26,7 @@ public class DictionaryLoader {
 
     public void load() {
         try(Stream<String> contentStream = Files.lines(Paths.get(dictSource))) {
-            contentStream.forEach(line -> insertToChord(line));
+            contentStream.forEach(this::insertToChord);
         } catch (IOException ioe) { ioe.printStackTrace();}
     }
 
