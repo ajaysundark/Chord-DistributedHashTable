@@ -35,7 +35,7 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
 
   private static final org.apache.thrift.protocol.TField IP_FIELD_DESC = new org.apache.thrift.protocol.TField("ip", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField PORT_FIELD_DESC = new org.apache.thrift.protocol.TField("port", org.apache.thrift.protocol.TType.I32, (short)2);
-  private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.I32, (short)3);
+  private static final org.apache.thrift.protocol.TField NODE_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("nodeId", org.apache.thrift.protocol.TType.I32, (short)3);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -45,13 +45,13 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
 
   public String ip; // required
   public int port; // required
-  public int id; // required
+  public int nodeId; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     IP((short)1, "ip"),
     PORT((short)2, "port"),
-    ID((short)3, "id");
+    NODE_ID((short)3, "nodeId");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -70,8 +70,8 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
           return IP;
         case 2: // PORT
           return PORT;
-        case 3: // ID
-          return ID;
+        case 3: // NODE_ID
+          return NODE_ID;
         default:
           return null;
       }
@@ -113,7 +113,7 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
 
   // isset id assignments
   private static final int __PORT_ISSET_ID = 0;
-  private static final int __ID_ISSET_ID = 1;
+  private static final int __NODEID_ISSET_ID = 1;
   private byte __isset_bitfield = 0;
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
@@ -122,7 +122,7 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.PORT, new org.apache.thrift.meta_data.FieldMetaData("port", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
-    tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+    tmpMap.put(_Fields.NODE_ID, new org.apache.thrift.meta_data.FieldMetaData("nodeId", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(NodeRef.class, metaDataMap);
@@ -134,14 +134,14 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
   public NodeRef(
     String ip,
     int port,
-    int id)
+    int nodeId)
   {
     this();
     this.ip = ip;
     this.port = port;
     setPortIsSet(true);
-    this.id = id;
-    setIdIsSet(true);
+    this.nodeId = nodeId;
+    setNodeIdIsSet(true);
   }
 
   /**
@@ -153,7 +153,7 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
       this.ip = other.ip;
     }
     this.port = other.port;
-    this.id = other.id;
+    this.nodeId = other.nodeId;
   }
 
   public NodeRef deepCopy() {
@@ -165,8 +165,8 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
     this.ip = null;
     setPortIsSet(false);
     this.port = 0;
-    setIdIsSet(false);
-    this.id = 0;
+    setNodeIdIsSet(false);
+    this.nodeId = 0;
   }
 
   public String getIp() {
@@ -216,27 +216,27 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PORT_ISSET_ID, value);
   }
 
-  public int getId() {
-    return this.id;
+  public int getNodeId() {
+    return this.nodeId;
   }
 
-  public NodeRef setId(int id) {
-    this.id = id;
-    setIdIsSet(true);
+  public NodeRef setNodeId(int nodeId) {
+    this.nodeId = nodeId;
+    setNodeIdIsSet(true);
     return this;
   }
 
-  public void unsetId() {
-    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __ID_ISSET_ID);
+  public void unsetNodeId() {
+    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __NODEID_ISSET_ID);
   }
 
-  /** Returns true if field id is set (has been assigned a value) and false otherwise */
-  public boolean isSetId() {
-    return EncodingUtils.testBit(__isset_bitfield, __ID_ISSET_ID);
+  /** Returns true if field nodeId is set (has been assigned a value) and false otherwise */
+  public boolean isSetNodeId() {
+    return EncodingUtils.testBit(__isset_bitfield, __NODEID_ISSET_ID);
   }
 
-  public void setIdIsSet(boolean value) {
-    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __ID_ISSET_ID, value);
+  public void setNodeIdIsSet(boolean value) {
+    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __NODEID_ISSET_ID, value);
   }
 
   public void setFieldValue(_Fields field, Object value) {
@@ -257,11 +257,11 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
       }
       break;
 
-    case ID:
+    case NODE_ID:
       if (value == null) {
-        unsetId();
+        unsetNodeId();
       } else {
-        setId((Integer)value);
+        setNodeId((Integer)value);
       }
       break;
 
@@ -276,8 +276,8 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
     case PORT:
       return Integer.valueOf(getPort());
 
-    case ID:
-      return Integer.valueOf(getId());
+    case NODE_ID:
+      return Integer.valueOf(getNodeId());
 
     }
     throw new IllegalStateException();
@@ -294,8 +294,8 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
       return isSetIp();
     case PORT:
       return isSetPort();
-    case ID:
-      return isSetId();
+    case NODE_ID:
+      return isSetNodeId();
     }
     throw new IllegalStateException();
   }
@@ -331,12 +331,12 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
         return false;
     }
 
-    boolean this_present_id = true;
-    boolean that_present_id = true;
-    if (this_present_id || that_present_id) {
-      if (!(this_present_id && that_present_id))
+    boolean this_present_nodeId = true;
+    boolean that_present_nodeId = true;
+    if (this_present_nodeId || that_present_nodeId) {
+      if (!(this_present_nodeId && that_present_nodeId))
         return false;
-      if (this.id != that.id)
+      if (this.nodeId != that.nodeId)
         return false;
     }
 
@@ -376,12 +376,12 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetId()).compareTo(other.isSetId());
+    lastComparison = Boolean.valueOf(isSetNodeId()).compareTo(other.isSetNodeId());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetId()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.id, other.id);
+    if (isSetNodeId()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.nodeId, other.nodeId);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -418,8 +418,8 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
     sb.append(this.port);
     first = false;
     if (!first) sb.append(", ");
-    sb.append("id:");
-    sb.append(this.id);
+    sb.append("nodeId:");
+    sb.append(this.nodeId);
     first = false;
     sb.append(")");
     return sb.toString();
@@ -431,7 +431,7 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
       throw new org.apache.thrift.protocol.TProtocolException("Required field 'ip' was not present! Struct: " + toString());
     }
     // alas, we cannot check 'port' because it's a primitive and you chose the non-beans generator.
-    // alas, we cannot check 'id' because it's a primitive and you chose the non-beans generator.
+    // alas, we cannot check 'nodeId' because it's a primitive and you chose the non-beans generator.
     // check for sub-struct validity
   }
 
@@ -487,10 +487,10 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 3: // ID
+          case 3: // NODE_ID
             if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.id = iprot.readI32();
-              struct.setIdIsSet(true);
+              struct.nodeId = iprot.readI32();
+              struct.setNodeIdIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -506,8 +506,8 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
       if (!struct.isSetPort()) {
         throw new org.apache.thrift.protocol.TProtocolException("Required field 'port' was not found in serialized data! Struct: " + toString());
       }
-      if (!struct.isSetId()) {
-        throw new org.apache.thrift.protocol.TProtocolException("Required field 'id' was not found in serialized data! Struct: " + toString());
+      if (!struct.isSetNodeId()) {
+        throw new org.apache.thrift.protocol.TProtocolException("Required field 'nodeId' was not found in serialized data! Struct: " + toString());
       }
       struct.validate();
     }
@@ -524,8 +524,8 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
       oprot.writeFieldBegin(PORT_FIELD_DESC);
       oprot.writeI32(struct.port);
       oprot.writeFieldEnd();
-      oprot.writeFieldBegin(ID_FIELD_DESC);
-      oprot.writeI32(struct.id);
+      oprot.writeFieldBegin(NODE_ID_FIELD_DESC);
+      oprot.writeI32(struct.nodeId);
       oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -546,7 +546,7 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
       TTupleProtocol oprot = (TTupleProtocol) prot;
       oprot.writeString(struct.ip);
       oprot.writeI32(struct.port);
-      oprot.writeI32(struct.id);
+      oprot.writeI32(struct.nodeId);
     }
 
     @Override
@@ -556,8 +556,8 @@ public class NodeRef implements org.apache.thrift.TBase<NodeRef, NodeRef._Fields
       struct.setIpIsSet(true);
       struct.port = iprot.readI32();
       struct.setPortIsSet(true);
-      struct.id = iprot.readI32();
-      struct.setIdIsSet(true);
+      struct.nodeId = iprot.readI32();
+      struct.setNodeIdIsSet(true);
     }
   }
 

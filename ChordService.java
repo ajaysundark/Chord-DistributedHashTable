@@ -50,6 +50,10 @@ public class ChordService {
 
     public NodeRef closestPrecedingFinger(int key) throws org.apache.thrift.TException;
 
+    public void updatePredecessor(NodeRef other) throws org.apache.thrift.TException;
+
+    public void updateFingerTables(NodeRef s, int i) throws org.apache.thrift.TException;
+
   }
 
   public interface AsyncIface {
@@ -69,6 +73,10 @@ public class ChordService {
     public void findPredecessor(int key, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void closestPrecedingFinger(int key, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void updatePredecessor(NodeRef other, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void updateFingerTables(NodeRef s, int i, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -268,6 +276,47 @@ public class ChordService {
         return result.success;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "closestPrecedingFinger failed: unknown result");
+    }
+
+    public void updatePredecessor(NodeRef other) throws org.apache.thrift.TException
+    {
+      send_updatePredecessor(other);
+      recv_updatePredecessor();
+    }
+
+    public void send_updatePredecessor(NodeRef other) throws org.apache.thrift.TException
+    {
+      updatePredecessor_args args = new updatePredecessor_args();
+      args.setOther(other);
+      sendBase("updatePredecessor", args);
+    }
+
+    public void recv_updatePredecessor() throws org.apache.thrift.TException
+    {
+      updatePredecessor_result result = new updatePredecessor_result();
+      receiveBase(result, "updatePredecessor");
+      return;
+    }
+
+    public void updateFingerTables(NodeRef s, int i) throws org.apache.thrift.TException
+    {
+      send_updateFingerTables(s, i);
+      recv_updateFingerTables();
+    }
+
+    public void send_updateFingerTables(NodeRef s, int i) throws org.apache.thrift.TException
+    {
+      updateFingerTables_args args = new updateFingerTables_args();
+      args.setS(s);
+      args.setI(i);
+      sendBase("updateFingerTables", args);
+    }
+
+    public void recv_updateFingerTables() throws org.apache.thrift.TException
+    {
+      updateFingerTables_result result = new updateFingerTables_result();
+      receiveBase(result, "updateFingerTables");
+      return;
     }
 
   }
@@ -544,6 +593,73 @@ public class ChordService {
       }
     }
 
+    public void updatePredecessor(NodeRef other, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      updatePredecessor_call method_call = new updatePredecessor_call(other, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class updatePredecessor_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private NodeRef other;
+      public updatePredecessor_call(NodeRef other, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.other = other;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("updatePredecessor", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        updatePredecessor_args args = new updatePredecessor_args();
+        args.setOther(other);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_updatePredecessor();
+      }
+    }
+
+    public void updateFingerTables(NodeRef s, int i, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      updateFingerTables_call method_call = new updateFingerTables_call(s, i, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class updateFingerTables_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private NodeRef s;
+      private int i;
+      public updateFingerTables_call(NodeRef s, int i, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.s = s;
+        this.i = i;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("updateFingerTables", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        updateFingerTables_args args = new updateFingerTables_args();
+        args.setS(s);
+        args.setI(i);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_updateFingerTables();
+      }
+    }
+
   }
 
   public static class Processor<I extends Iface> extends org.apache.thrift.TBaseProcessor<I> implements org.apache.thrift.TProcessor {
@@ -565,6 +681,8 @@ public class ChordService {
       processMap.put("findSuccessor", new findSuccessor());
       processMap.put("findPredecessor", new findPredecessor());
       processMap.put("closestPrecedingFinger", new closestPrecedingFinger());
+      processMap.put("updatePredecessor", new updatePredecessor());
+      processMap.put("updateFingerTables", new updateFingerTables());
       return processMap;
     }
 
@@ -729,6 +847,46 @@ public class ChordService {
       }
     }
 
+    public static class updatePredecessor<I extends Iface> extends org.apache.thrift.ProcessFunction<I, updatePredecessor_args> {
+      public updatePredecessor() {
+        super("updatePredecessor");
+      }
+
+      public updatePredecessor_args getEmptyArgsInstance() {
+        return new updatePredecessor_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public updatePredecessor_result getResult(I iface, updatePredecessor_args args) throws org.apache.thrift.TException {
+        updatePredecessor_result result = new updatePredecessor_result();
+        iface.updatePredecessor(args.other);
+        return result;
+      }
+    }
+
+    public static class updateFingerTables<I extends Iface> extends org.apache.thrift.ProcessFunction<I, updateFingerTables_args> {
+      public updateFingerTables() {
+        super("updateFingerTables");
+      }
+
+      public updateFingerTables_args getEmptyArgsInstance() {
+        return new updateFingerTables_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public updateFingerTables_result getResult(I iface, updateFingerTables_args args) throws org.apache.thrift.TException {
+        updateFingerTables_result result = new updateFingerTables_result();
+        iface.updateFingerTables(args.s, args.i);
+        return result;
+      }
+    }
+
   }
 
   public static class AsyncProcessor<I extends AsyncIface> extends org.apache.thrift.TBaseAsyncProcessor<I> {
@@ -750,6 +908,8 @@ public class ChordService {
       processMap.put("findSuccessor", new findSuccessor());
       processMap.put("findPredecessor", new findPredecessor());
       processMap.put("closestPrecedingFinger", new closestPrecedingFinger());
+      processMap.put("updatePredecessor", new updatePredecessor());
+      processMap.put("updateFingerTables", new updateFingerTables());
       return processMap;
     }
 
@@ -1157,6 +1317,106 @@ public class ChordService {
 
       public void start(I iface, closestPrecedingFinger_args args, org.apache.thrift.async.AsyncMethodCallback<NodeRef> resultHandler) throws TException {
         iface.closestPrecedingFinger(args.key,resultHandler);
+      }
+    }
+
+    public static class updatePredecessor<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, updatePredecessor_args, Void> {
+      public updatePredecessor() {
+        super("updatePredecessor");
+      }
+
+      public updatePredecessor_args getEmptyArgsInstance() {
+        return new updatePredecessor_args();
+      }
+
+      public AsyncMethodCallback<Void> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            updatePredecessor_result result = new updatePredecessor_result();
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            updatePredecessor_result result = new updatePredecessor_result();
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, updatePredecessor_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws TException {
+        iface.updatePredecessor(args.other,resultHandler);
+      }
+    }
+
+    public static class updateFingerTables<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, updateFingerTables_args, Void> {
+      public updateFingerTables() {
+        super("updateFingerTables");
+      }
+
+      public updateFingerTables_args getEmptyArgsInstance() {
+        return new updateFingerTables_args();
+      }
+
+      public AsyncMethodCallback<Void> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            updateFingerTables_result result = new updateFingerTables_result();
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            updateFingerTables_result result = new updateFingerTables_result();
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, updateFingerTables_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws TException {
+        iface.updateFingerTables(args.s, args.i,resultHandler);
       }
     }
 
@@ -6614,6 +6874,1314 @@ public class ChordService {
           struct.success.read(iprot);
           struct.setSuccessIsSet(true);
         }
+      }
+    }
+
+  }
+
+  public static class updatePredecessor_args implements org.apache.thrift.TBase<updatePredecessor_args, updatePredecessor_args._Fields>, java.io.Serializable, Cloneable, Comparable<updatePredecessor_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("updatePredecessor_args");
+
+    private static final org.apache.thrift.protocol.TField OTHER_FIELD_DESC = new org.apache.thrift.protocol.TField("other", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new updatePredecessor_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new updatePredecessor_argsTupleSchemeFactory());
+    }
+
+    public NodeRef other; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      OTHER((short)1, "other");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // OTHER
+            return OTHER;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.OTHER, new org.apache.thrift.meta_data.FieldMetaData("other", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, NodeRef.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(updatePredecessor_args.class, metaDataMap);
+    }
+
+    public updatePredecessor_args() {
+    }
+
+    public updatePredecessor_args(
+      NodeRef other)
+    {
+      this();
+      this.other = other;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public updatePredecessor_args(updatePredecessor_args other) {
+      if (other.isSetOther()) {
+        this.other = new NodeRef(other.other);
+      }
+    }
+
+    public updatePredecessor_args deepCopy() {
+      return new updatePredecessor_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.other = null;
+    }
+
+    public NodeRef getOther() {
+      return this.other;
+    }
+
+    public updatePredecessor_args setOther(NodeRef other) {
+      this.other = other;
+      return this;
+    }
+
+    public void unsetOther() {
+      this.other = null;
+    }
+
+    /** Returns true if field other is set (has been assigned a value) and false otherwise */
+    public boolean isSetOther() {
+      return this.other != null;
+    }
+
+    public void setOtherIsSet(boolean value) {
+      if (!value) {
+        this.other = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case OTHER:
+        if (value == null) {
+          unsetOther();
+        } else {
+          setOther((NodeRef)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case OTHER:
+        return getOther();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case OTHER:
+        return isSetOther();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof updatePredecessor_args)
+        return this.equals((updatePredecessor_args)that);
+      return false;
+    }
+
+    public boolean equals(updatePredecessor_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_other = true && this.isSetOther();
+      boolean that_present_other = true && that.isSetOther();
+      if (this_present_other || that_present_other) {
+        if (!(this_present_other && that_present_other))
+          return false;
+        if (!this.other.equals(that.other))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(updatePredecessor_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetOther()).compareTo(other.isSetOther());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetOther()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.other, other.other);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("updatePredecessor_args(");
+      boolean first = true;
+
+      sb.append("other:");
+      if (this.other == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.other);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (other != null) {
+        other.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class updatePredecessor_argsStandardSchemeFactory implements SchemeFactory {
+      public updatePredecessor_argsStandardScheme getScheme() {
+        return new updatePredecessor_argsStandardScheme();
+      }
+    }
+
+    private static class updatePredecessor_argsStandardScheme extends StandardScheme<updatePredecessor_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, updatePredecessor_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // OTHER
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.other = new NodeRef();
+                struct.other.read(iprot);
+                struct.setOtherIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, updatePredecessor_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.other != null) {
+          oprot.writeFieldBegin(OTHER_FIELD_DESC);
+          struct.other.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class updatePredecessor_argsTupleSchemeFactory implements SchemeFactory {
+      public updatePredecessor_argsTupleScheme getScheme() {
+        return new updatePredecessor_argsTupleScheme();
+      }
+    }
+
+    private static class updatePredecessor_argsTupleScheme extends TupleScheme<updatePredecessor_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, updatePredecessor_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetOther()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetOther()) {
+          struct.other.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, updatePredecessor_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.other = new NodeRef();
+          struct.other.read(iprot);
+          struct.setOtherIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class updatePredecessor_result implements org.apache.thrift.TBase<updatePredecessor_result, updatePredecessor_result._Fields>, java.io.Serializable, Cloneable, Comparable<updatePredecessor_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("updatePredecessor_result");
+
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new updatePredecessor_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new updatePredecessor_resultTupleSchemeFactory());
+    }
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(updatePredecessor_result.class, metaDataMap);
+    }
+
+    public updatePredecessor_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public updatePredecessor_result(updatePredecessor_result other) {
+    }
+
+    public updatePredecessor_result deepCopy() {
+      return new updatePredecessor_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof updatePredecessor_result)
+        return this.equals((updatePredecessor_result)that);
+      return false;
+    }
+
+    public boolean equals(updatePredecessor_result that) {
+      if (that == null)
+        return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(updatePredecessor_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("updatePredecessor_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class updatePredecessor_resultStandardSchemeFactory implements SchemeFactory {
+      public updatePredecessor_resultStandardScheme getScheme() {
+        return new updatePredecessor_resultStandardScheme();
+      }
+    }
+
+    private static class updatePredecessor_resultStandardScheme extends StandardScheme<updatePredecessor_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, updatePredecessor_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, updatePredecessor_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class updatePredecessor_resultTupleSchemeFactory implements SchemeFactory {
+      public updatePredecessor_resultTupleScheme getScheme() {
+        return new updatePredecessor_resultTupleScheme();
+      }
+    }
+
+    private static class updatePredecessor_resultTupleScheme extends TupleScheme<updatePredecessor_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, updatePredecessor_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, updatePredecessor_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+      }
+    }
+
+  }
+
+  public static class updateFingerTables_args implements org.apache.thrift.TBase<updateFingerTables_args, updateFingerTables_args._Fields>, java.io.Serializable, Cloneable, Comparable<updateFingerTables_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("updateFingerTables_args");
+
+    private static final org.apache.thrift.protocol.TField S_FIELD_DESC = new org.apache.thrift.protocol.TField("s", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField I_FIELD_DESC = new org.apache.thrift.protocol.TField("i", org.apache.thrift.protocol.TType.I32, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new updateFingerTables_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new updateFingerTables_argsTupleSchemeFactory());
+    }
+
+    public NodeRef s; // required
+    public int i; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      S((short)1, "s"),
+      I((short)2, "i");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // S
+            return S;
+          case 2: // I
+            return I;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __I_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.S, new org.apache.thrift.meta_data.FieldMetaData("s", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, NodeRef.class)));
+      tmpMap.put(_Fields.I, new org.apache.thrift.meta_data.FieldMetaData("i", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(updateFingerTables_args.class, metaDataMap);
+    }
+
+    public updateFingerTables_args() {
+    }
+
+    public updateFingerTables_args(
+      NodeRef s,
+      int i)
+    {
+      this();
+      this.s = s;
+      this.i = i;
+      setIIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public updateFingerTables_args(updateFingerTables_args other) {
+      __isset_bitfield = other.__isset_bitfield;
+      if (other.isSetS()) {
+        this.s = new NodeRef(other.s);
+      }
+      this.i = other.i;
+    }
+
+    public updateFingerTables_args deepCopy() {
+      return new updateFingerTables_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.s = null;
+      setIIsSet(false);
+      this.i = 0;
+    }
+
+    public NodeRef getS() {
+      return this.s;
+    }
+
+    public updateFingerTables_args setS(NodeRef s) {
+      this.s = s;
+      return this;
+    }
+
+    public void unsetS() {
+      this.s = null;
+    }
+
+    /** Returns true if field s is set (has been assigned a value) and false otherwise */
+    public boolean isSetS() {
+      return this.s != null;
+    }
+
+    public void setSIsSet(boolean value) {
+      if (!value) {
+        this.s = null;
+      }
+    }
+
+    public int getI() {
+      return this.i;
+    }
+
+    public updateFingerTables_args setI(int i) {
+      this.i = i;
+      setIIsSet(true);
+      return this;
+    }
+
+    public void unsetI() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __I_ISSET_ID);
+    }
+
+    /** Returns true if field i is set (has been assigned a value) and false otherwise */
+    public boolean isSetI() {
+      return EncodingUtils.testBit(__isset_bitfield, __I_ISSET_ID);
+    }
+
+    public void setIIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __I_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case S:
+        if (value == null) {
+          unsetS();
+        } else {
+          setS((NodeRef)value);
+        }
+        break;
+
+      case I:
+        if (value == null) {
+          unsetI();
+        } else {
+          setI((Integer)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case S:
+        return getS();
+
+      case I:
+        return Integer.valueOf(getI());
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case S:
+        return isSetS();
+      case I:
+        return isSetI();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof updateFingerTables_args)
+        return this.equals((updateFingerTables_args)that);
+      return false;
+    }
+
+    public boolean equals(updateFingerTables_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_s = true && this.isSetS();
+      boolean that_present_s = true && that.isSetS();
+      if (this_present_s || that_present_s) {
+        if (!(this_present_s && that_present_s))
+          return false;
+        if (!this.s.equals(that.s))
+          return false;
+      }
+
+      boolean this_present_i = true;
+      boolean that_present_i = true;
+      if (this_present_i || that_present_i) {
+        if (!(this_present_i && that_present_i))
+          return false;
+        if (this.i != that.i)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(updateFingerTables_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetS()).compareTo(other.isSetS());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetS()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.s, other.s);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetI()).compareTo(other.isSetI());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetI()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.i, other.i);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("updateFingerTables_args(");
+      boolean first = true;
+
+      sb.append("s:");
+      if (this.s == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.s);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("i:");
+      sb.append(this.i);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (s != null) {
+        s.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class updateFingerTables_argsStandardSchemeFactory implements SchemeFactory {
+      public updateFingerTables_argsStandardScheme getScheme() {
+        return new updateFingerTables_argsStandardScheme();
+      }
+    }
+
+    private static class updateFingerTables_argsStandardScheme extends StandardScheme<updateFingerTables_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, updateFingerTables_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // S
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.s = new NodeRef();
+                struct.s.read(iprot);
+                struct.setSIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // I
+              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+                struct.i = iprot.readI32();
+                struct.setIIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, updateFingerTables_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.s != null) {
+          oprot.writeFieldBegin(S_FIELD_DESC);
+          struct.s.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldBegin(I_FIELD_DESC);
+        oprot.writeI32(struct.i);
+        oprot.writeFieldEnd();
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class updateFingerTables_argsTupleSchemeFactory implements SchemeFactory {
+      public updateFingerTables_argsTupleScheme getScheme() {
+        return new updateFingerTables_argsTupleScheme();
+      }
+    }
+
+    private static class updateFingerTables_argsTupleScheme extends TupleScheme<updateFingerTables_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, updateFingerTables_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetS()) {
+          optionals.set(0);
+        }
+        if (struct.isSetI()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetS()) {
+          struct.s.write(oprot);
+        }
+        if (struct.isSetI()) {
+          oprot.writeI32(struct.i);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, updateFingerTables_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.s = new NodeRef();
+          struct.s.read(iprot);
+          struct.setSIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.i = iprot.readI32();
+          struct.setIIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class updateFingerTables_result implements org.apache.thrift.TBase<updateFingerTables_result, updateFingerTables_result._Fields>, java.io.Serializable, Cloneable, Comparable<updateFingerTables_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("updateFingerTables_result");
+
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new updateFingerTables_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new updateFingerTables_resultTupleSchemeFactory());
+    }
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(updateFingerTables_result.class, metaDataMap);
+    }
+
+    public updateFingerTables_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public updateFingerTables_result(updateFingerTables_result other) {
+    }
+
+    public updateFingerTables_result deepCopy() {
+      return new updateFingerTables_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof updateFingerTables_result)
+        return this.equals((updateFingerTables_result)that);
+      return false;
+    }
+
+    public boolean equals(updateFingerTables_result that) {
+      if (that == null)
+        return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(updateFingerTables_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("updateFingerTables_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class updateFingerTables_resultStandardSchemeFactory implements SchemeFactory {
+      public updateFingerTables_resultStandardScheme getScheme() {
+        return new updateFingerTables_resultStandardScheme();
+      }
+    }
+
+    private static class updateFingerTables_resultStandardScheme extends StandardScheme<updateFingerTables_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, updateFingerTables_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, updateFingerTables_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class updateFingerTables_resultTupleSchemeFactory implements SchemeFactory {
+      public updateFingerTables_resultTupleScheme getScheme() {
+        return new updateFingerTables_resultTupleScheme();
+      }
+    }
+
+    private static class updateFingerTables_resultTupleScheme extends TupleScheme<updateFingerTables_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, updateFingerTables_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, updateFingerTables_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
       }
     }
 
